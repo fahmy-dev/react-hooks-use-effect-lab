@@ -1,11 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 function Question({ question, onAnswered }) {
   const [timeRemaining, setTimeRemaining] = useState(10);
 
   // add useEffect code
-
-  function handleAnswer(isCorrect) {
+  useEffect(() => {
+    if (timeRemaining > 0) {
+    const timer = setTimeout(() => setTimeRemaining((timeRemaining) => timeRemaining - 1), 1000)
+  
+    return () => clearTimeout(timer)
+    } else {
+    setTimeRemaining(10);
+    onAnswered(false);
+    }
+  }, [timeRemaining]);
+  
+function handleAnswer(isCorrect) {
     setTimeRemaining(10);
     onAnswered(isCorrect);
   }
